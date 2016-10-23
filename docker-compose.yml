@@ -1,0 +1,25 @@
+version: '2'
+services:
+  onebody-db:
+    image: mariadb
+    environment:
+      MYSQL_USER: 'onebody-dev'
+      MYSQL_ROOT_PASSWORD: 'root'
+      MYSQL_PASSWORD: 'onebody-dev'
+      MYSQL_DATABASE: 'onebody-dev'
+  onebody:
+    build: .
+    volumes:
+      - .:/app
+    environment:
+      RAILS_ENV: 'development'
+      RAILS_PORT: 3000
+      MYSQL_USER: 'onebody-dev'
+      MYSQL_PASSWORD: 'onebody-dev'
+      MYSQL_DATABASE: 'onebody-dev'
+    ports:
+      - "3000:3000"
+    expose:
+      - 3000
+    links:
+      - onebody-db
